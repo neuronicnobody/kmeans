@@ -4,7 +4,7 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/muesli/clusters"
+	"github.com/neuronicnobody/clusters"
 )
 
 const (
