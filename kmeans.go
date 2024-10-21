@@ -47,12 +47,20 @@ func New() Kmeans {
 
 // Partition executes the k-means algorithm on the given dataset and
 // partitions it into k clusters
-func (m Kmeans) Partition(dataset clusters.Observations, k int) (clusters.Clusters, error) {
+func (m Kmeans) Partition(dataset clusters.Observations, k int, initialCenters ...[]clusters.Coordinates) (clusters.Clusters, error) {
 	if k > len(dataset) {
 		return clusters.Clusters{}, fmt.Errorf("the size of the data set must at least equal k")
 	}
 
-	cc, err := clusters.New(k, dataset)
+	var cc clusters.Clusters
+	var err error
+
+	if len(initialCenters) > 0 {
+		cc, err = clusters.NewWithInitial(k, dataset, initialCenters[0])
+	} else {
+		cc, err = clusters.New(k, dataset)
+	}
+
 	if err != nil {
 		return cc, err
 	}
